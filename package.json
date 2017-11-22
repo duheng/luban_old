@@ -1,0 +1,25 @@
+{
+  "name": "lu__ban",
+  "version": "1.0.0",
+  "description": "这是一个webpack脚手架",
+  "main": "bin/index.js",
+  "bin": {
+    "luban": "bin/index.js"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duheng/Luban.git"
+  },
+  "keywords": [
+    "webpack"
+  ],
+  "author": "duheng",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/duheng/Luban/issues"
+  },
+  "homepage": "https://github.com/duheng/Luban#readme"
+}
