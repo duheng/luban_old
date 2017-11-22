@@ -3,7 +3,7 @@
 Luban 是一个基于 webpack 的打包工具
 
 
-### <span id="install">如何安装</span>
+### <span id="install">安装Luban</span>
 
   ```
   # 克隆 Luban 仓库到本地目录
