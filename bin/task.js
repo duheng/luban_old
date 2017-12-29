@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var program = require("commander"),
+const program = require("commander"),
   path = require("path"),
   os = require("os"),
   fs = require("fs"),
@@ -8,6 +8,24 @@ var program = require("commander"),
   CWD = process.cwd()
 
 require("shelljs/global")
+
+var webpack = path.resolve(
+  __dirname,
+  "..",
+  "..",
+  "node_modules",
+  ".bin",
+  "webpack"
+);
+
+var webpack_dev_server = path.resolve(
+  __dirname,
+  "..",
+  "..",
+  "node_modules",
+  ".bin",
+  "webpack-dev-server"
+);
 
 function check_modules() {
   if (!fs.existsSync(path.resolve(CWD, "node_modules"))) {
@@ -37,6 +55,17 @@ module.exports = {
     //  console.log('process.env.MODE____', process.env)
     //  process.env.MODE = "start";
     //
-    server.start()
+    process.env.MODE = "dev";
+    exec(
+        webpack_dev_server +
+        " --env=dev " +
+        " --progress " +
+        " --profile " +
+        " --colors " +
+        " --watch " +
+        " --config " +
+        path.resolve(__dirname, "..", "bin", "webpack", "dev.js") +
+        " --open"
+    )
   }
 }

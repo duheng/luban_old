@@ -6,7 +6,9 @@
     "luban": "bin/index.js"
   },
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "dev": "webpack-dev-server --env=dev --progress --profile --colors --watch --config bin/webpack/dev.js --open",
+    "build": "webpack --env=prod --progress --profile --colors --config config/webpack.config.js"
   },
   "repository": {
     "type": "git",

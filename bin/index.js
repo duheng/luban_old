@@ -2,7 +2,7 @@
 
 var program = require("commander"),
   path = require("path"),
-  luban = require("./utils/config"),
+  luban = require("./utils/tools"),
   task = require("./task"),
   packages = require("../package.json"),
   CWD = process.cwd()
