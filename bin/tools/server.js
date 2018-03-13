@@ -2,7 +2,6 @@ var path        =   require('path'),
     express     =   require('express'),
     webpack     =   require('webpack'),
     fs          =   require('fs'),
-    os          =   require('os'),
     CWD         =   process.cwd(),
     DEV         =   require('../webpack.config/development.config'),
     browser     =   require('./browser')
@@ -45,7 +44,6 @@ console.log('###################',process.env.MODE)
         res.send(result);
         res.end();
       });
-      // res.sendFile(path.resolve(CWD, luban.build, 'index.html'));
     });
 
     app.listen(luban.port, luban.host, function(err) {

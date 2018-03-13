@@ -1,7 +1,7 @@
 var path = require('path');
 var fs = require('fs');
 var CWD = process.cwd();
-var default_luban = require('./luban.config.js');
+var default_luban = require('./luban.json');
 
 function extend(target, source) {
     var hasOwnProperty = {}.hasOwnProperty;
