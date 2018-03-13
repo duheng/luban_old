@@ -141,17 +141,15 @@ const webpackConfig = config => {
                 React: "react"
             }),
             new TransferWebpackPlugin(
-                config.transfer_assets
-                    ? [
-                          {
-                              from: path.join(
-                                  config.base,
-                                  config.assets || "assets"
-                              ),
-                              to: path.join(config.assets || "assets")
-                          }
-                      ]
-                    : [],
+                [
+                    {
+                        from: path.join(
+                            config.base,
+                            config.assets || "assets"
+                        ),
+                        to: path.join(config.assets || "assets")
+                    }
+                ],
                 path.resolve(CWD)
             )
         ]

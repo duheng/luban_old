@@ -15,7 +15,7 @@ require("shelljs/global")
 
 function check_modules() {
     if (!fs.existsSync(path.resolve(CWD, "node_modules"))) {
-        console.log("install node modules ... \n")
+        console.log("🤖️ install node modules ... \n")
         exec("npm install")
     }
 }

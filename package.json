@@ -1,7 +1,7 @@
 {
   "name": "luban",
   "version": "0.0.1",
-  "description": "这是一个基于webpack的工程化工具🔧",
+  "description": "这是一个基于webpack的工程化工具 🤖️ ",
   "keywords": "webpack, react, es6",
   "bin": {
     "luban": "bin/index.js"
@@ -32,7 +32,7 @@
     "babel-plugin-transform-runtime": "^6.12.0",
     "babel-preset-env": "^1.5.0",
     "babel-preset-react": "^6.11.1",
-    "babel-preset-stage-0": "*",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-runtime": "^6.11.6",
     "blueimp-tmpl": "^2.5.7",
     "case-sensitive-paths-webpack-plugin": "^1.1.3",
@@ -46,11 +46,12 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^0.11.1",
     "html-webpack-plugin": "1.7.0",
-    "http-proxy-middleware": "^0.9.0",
+    "http-proxy-middleware": "^0.9.1",
     "image-webpack-loader": "4.1.0",
     "inquirer": "^0.11.0",
     "less": "^2.5.3",
     "less-loader": "^4.0.3",
+    "mockjs": "^1.0.1-beta3",
     "node-sass": "^4.5.2",
     "object-assign": "^4.1.0",
     "opn": "^4.0.2",

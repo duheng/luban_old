@@ -36,6 +36,5 @@
     "components": "components",
     "scss": "scss",
     "cpmode": "react",
-    "transfer_assets": false,
     "base64_image_limit": 10240
 }

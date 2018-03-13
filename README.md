@@ -1,18 +1,18 @@
-# Luban
+# luban
 
-Luban 是一个基于 webpack 的打包工具,优势是独立于具体项目便于统一维护升级，开发调试
+luban 是一个基于 webpack 的打包工具,优势是独立于具体项目便于统一维护升级，开发调试
 
 
-### 安装Luban
+### 安装luban
 
   ```
   1. 克隆 Luban 仓库到本地目录
 
-  git clone https://github.com/duheng/Luban.git
+  git clone https://github.com/duheng/luban.git
 
-  2. 进入 Luban 目录
+  2. 进入 luban 目录
 
-  cd Luban
+  cd luban
 
   3. 创建快捷链接
 

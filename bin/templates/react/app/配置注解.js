@@ -67,9 +67,6 @@ module.exports = {
     // 先泽react或者vue编译模式，默认react
     cpmode: "react",
 
-    // 是否要拷贝静态资源
-    transfer_assets: false,
-
     // base64图片限制，默认10k，小于10k的图片用base64内嵌进页面，
     base64_image_limit: 10240 // 10k
 }
