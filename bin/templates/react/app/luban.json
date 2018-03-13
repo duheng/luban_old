@@ -1,0 +1,41 @@
+{
+    "host": "127.0.0.1",
+    "port": "3001",
+    "base": "src",
+    "build": "dist",
+    "static": {
+        "start": "",
+        "test": "",
+        "release": "//static.luban.com/"
+    },
+    "api": {
+        "start": "",
+        "test": "",
+        "release": "//api.luban.com/"
+    },
+    "vendor": ["react", "react-dom"],
+    "alias": {
+        "scss": "scss",
+        "components": "components",
+        "utils": "utils",
+        "assets": "assets",
+        "app": "app"
+    },
+    "devtool": "source-map",
+    "css_modules": false,
+    "eslint": false,
+    "template": {
+        "title": "鲁班",
+        "keywords": "后裔",
+        "description": "",
+        "viewport": "",
+        "favicon": "",
+        "path": "template.html"
+    },
+    "pages": "pages",
+    "components": "components",
+    "scss": "scss",
+    "cpmode": "react",
+    "transfer_assets": false,
+    "base64_image_limit": 10240
+}
