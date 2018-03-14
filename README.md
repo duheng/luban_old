@@ -38,6 +38,7 @@ npm start
 1. react router4以上路由如果不加exact会出现路由变化但是页面并没有变化
 2. npm 包加载顺序导致loader加载失败。
 3. react-proxy-loader不支持react16，（react16中在基础包移除了React.createClass这种创建组件的方法，如果要用就要单独加载create-react-class，但是修改react-proxy-loader的源码不划算）， 所以用lazy-load-component替换
+4.react router4中改变了router的push方法位置，换到history下，相当于以前用this.context.router.push('/some')跳转页面，现在用this.context.router.history.push('/some')
 
 
 ```
