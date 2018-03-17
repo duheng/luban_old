@@ -7,6 +7,21 @@ const webpack = require("webpack")
 const baseConfig = require("./base.config")
 
 module.exports = config => {
+
+    const genEntries = () => {
+        var jsDir = path.resolve(CWD, config.base, config.pages);
+        var names = fs.readdirSync(jsDir);
+        var map = {};
+        names.forEach(function(name) {
+            var m = name.match(/(.+)\.js$/);
+            var entry = m ? m[1] : '';
+            var entryPath = entry ? ['webpack-hot-middleware/client','' +path.resolve(jsDir, name)+''] : '';
+            if(entry) map[entry] = entryPath;
+        });
+
+        return map;
+    }
+  
     const plugins = [
         // Enables Hot Modules Replacement
         new webpack.HotModuleReplacementPlugin(),
