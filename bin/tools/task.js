@@ -76,13 +76,14 @@ module.exports = {
             console.log("App name is required")
             process.exit(1)
         }
-        console.log(
-            "23456789",
-            path.resolve(__dirname, "..", "templates/react/app/")
-        )
         cp(
             "-R",
             path.resolve(__dirname, "..", "templates/react/app/*"),
+            path.resolve(CWD, name)
+        )
+        cp(
+            "-R",
+            path.resolve(__dirname, "..", "templates/react/app/.*"),
             path.resolve(CWD, name)
         )
         console.log("项目", name, "创建成功")

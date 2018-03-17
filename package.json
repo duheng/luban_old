@@ -74,7 +74,8 @@
     "webpack-git-hash": "1.0.2",
     "webpack-hot-middleware": "^2.21.2",
     "webpack-merge": "4.1.2",
-    "whatwg-fetch": "^1.0.0"
+    "whatwg-fetch": "^1.0.0",
+    "prettier": "^1.11.1"
   },
   "repository": {
     "type": "git",

@@ -7,7 +7,8 @@
     "license": "ISC",
     "scripts": {
         "start": "luban start",
-        "luban": "luban"
+        "luban": "luban",
+        "prettier": "prettier --write --config .prettierrc \"src/**/*.{js,css,scss,less}\""
     },
     "dependencies": {
         "classnames": "^1.2.0",

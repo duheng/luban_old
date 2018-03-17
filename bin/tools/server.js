@@ -25,8 +25,14 @@ console.log('###################',process.env.MODE)
       }
     }));
 
+ //    Object.keys(devConfig.entry).forEach(function(key) {
+ //   devConfig.entry[key] = ['webpack-hot-middleware/client?reload=true'].concat(devConfig.entry[key]);
+ // })
+
     is_start && app.use(require('webpack-hot-middleware')(compiler));
 
+
+   console.log('______')
     // mock
     var mock_data = path.resolve(CWD, 'mock.js');
     if( fs.existsSync(mock_data) ) {
@@ -62,7 +68,7 @@ console.log('###################',process.env.MODE)
 
 
     app.get('*', function(req, res, next) {
-
+console.log("********")
       var index_name = 'index.html'
 
       var filename = path.join(compiler.outputPath, index_name);
