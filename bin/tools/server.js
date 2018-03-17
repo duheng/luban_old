@@ -44,8 +44,6 @@ console.log('###################',process.env.MODE)
                         pathRewrite: item.pathRewrite,
                         headers: item.headers
                     }));
-                } else if ( item.controller ) {
-                    app[item.method || 'get'](item.path, item.controller);
                 } else {
                     var method = item.method || 'get';
                     app[method](item.path, function(req, res) {

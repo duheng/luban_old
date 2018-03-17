@@ -7,8 +7,6 @@ const CWD = process.cwd()
 
 const webpackConfig = config => {
     // console.log('process.env.MODE__________', process.env.MODE)
-    //
-   console.log(config.alias)
     const is_production = process.env.MODE !== "start"
     console.log("is_production______", is_production)
     return {

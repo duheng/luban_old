@@ -1,27 +1,26 @@
 #!/usr/bin/env node
 
-var program = require("commander"),
-    path = require("path"),
-    os = require("os"),
-    fs = require("fs"),
-    template = require("../templates"),
-    config = require("./config"),
-    server = require("./server"),
-    luban = config.getluban(),
-    watch = require("watch"),
-    CWD = process.cwd()
+const program = require("commander");
+const path = require("path");
+const os = require("os");
+const fs = require("fs");
+const template = require("../templates");
+const config = require("./config");
+const server = require("./server");
+const luban = config.getluban();
+const watch = require("watch");
+const CWD = process.cwd();
 
 require("shelljs/global")
 
-function check_modules() {
+const check_modules = () => {
     if (!fs.existsSync(path.resolve(CWD, "node_modules"))) {
         console.log("🤖️ install node modules ... \n")
         exec("npm install")
     }
 }
 
-// use webpack in node_modules/.bin/webpack
-var webpack = path.resolve(
+const webpack = path.resolve(
     __dirname,
     "..",
     "..",
@@ -31,15 +30,15 @@ var webpack = path.resolve(
 )
 
 module.exports = {
-    start: function(port) {
+    start: (port) => {
         check_modules()
         process.env.MODE = "start"
         luban.port = port || luban.port
         setTimeout(() => {
             server.start(luban)
-        }, 0)
+        }, 1)
     },
-    test: function(start_server) {
+    test: (creat_server) => {
         check_modules()
         process.env.MODE = "test"
         exec(
@@ -53,9 +52,9 @@ module.exports = {
                 ) +
                 " --progress"
         )
-        start_server && server.start(luban)
+        creat_server && server.start(luban)
     },
-    release: function(start_server) {
+    release: (creat_server) => {
         check_modules()
         process.env.MODE = "release"
         exec(
@@ -69,9 +68,9 @@ module.exports = {
                 ) +
                 " --progress"
         )
-        start_server && server.start(luban)
+        creat_server && server.start(luban)
     },
-    init: function(name, esmode) {
+    init: (name, esmode) => {
         if (!name || !name.length) {
             console.log("App name is required")
             process.exit(1)
@@ -86,6 +85,6 @@ module.exports = {
             path.resolve(__dirname, "..", "templates/react/app/.*"),
             path.resolve(CWD, name)
         )
-        console.log("项目", name, "创建成功")
+        console.log("项目", name, "创建成功🌹")
     }
 }

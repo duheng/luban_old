@@ -1,54 +1,42 @@
 #!/usr/bin/env node
 
-var commander = require("commander"),
-    path = require("path"),
-    fs = require("fs"),
-    task = require("./tools/task"),
-    cli = require("./tools/cli"),
-    packages = require("../package.json"),
-    luban = require("./tools/config"),
-    CWD = process.cwd()
+const  commander = require("commander");
+const  path = require("path");
+const  fs = require("fs");
+const  task = require("./tools/task");
+const  task_options = require("./tools/task_options");
+const  packages = require("../package.json");
+const  luban = require("./tools/config");
+const  CWD = process.cwd();
 
-require("shelljs/global")
-
+require("shelljs/global");
+const config = luban.getluban()
 var __mode
 
 commander
     .version(packages.version)
-    .option("-p, --port", "custom server port", config.port)
-    .option("-m, --mode", "choose esmode", config.esmode)
-    .option("-s, --server", "run static server", true)
-    .option("-w, --watch", "run eslint in watch mode", true)
+    .option("-p, --port", "cmd 自定义端口号", config.port)
     .arguments("[mode] [name]")
     .action(function(mode, name) {
-        var config = luban.getluban()
+      console.log('^^^^^^^^^^^',process.argv)
         __mode = mode
-
-        if (!luban.hasluban() && mode !== "init" && mode !== "upgrade") {
-            console.error("luban can't run without luban.config.js \n")
+        if (!luban.hasluban() && mode !== "init") {
+            console.error("请设置luban的配置文件luban.json或者luban.config.js \n")
             process.exit(1)
         }
 
-        // supported modes
-        var modes = ["init", "start", "test", "release"]
+        let modes = ["init", "start", "test", "release"]
         if (modes.indexOf(mode) === -1) {
-            console.log("luban task miss match \n")
-            cli.help()
+            console.log("luban暂不支持该命令 \n")
+            task_options.help()
         } else {
-            // clean build directory
             rm("-rf", path.resolve(CWD, config.build))
-            task[mode](
-                name ||
-                    commander.port ||
-                    commander.esmode ||
-                    commander.server ||
-                    commander.watch
-            )
+            task[mode](name)
         }
     })
 
 commander.parse(process.argv)
 
 if (!__mode) {
-    cli.help()
+    task_options.help()
 }

@@ -2,7 +2,7 @@ module.exports = [{
     path: /\/apis/,
     method: 'get',
     data: function(options) {
-        return [{ // response data
+        return [{
             id: 1,
             first: '@FIRST',
         }, {
@@ -22,6 +22,6 @@ module.exports = [{
         }]
     }
 }, , {
-    path: '/movie',
-    proxy: 'http://mapi.ffan.com',
+    path: '/luban',
+    proxy: 'http://api.luban.com',
 }]
