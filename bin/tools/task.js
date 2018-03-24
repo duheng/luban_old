@@ -2,7 +2,7 @@
 
 const program = require("commander");
 const path = require("path");
-const os = require("os");
+// const os = require("os");
 const fs = require("fs");
 const template = require("../templates");
 const config = require("./config");
@@ -13,9 +13,9 @@ const CWD = process.cwd();
 
 require("shelljs/global")
 
-const check_modules = () => {
+const installNodeModules = () => {
     if (!fs.existsSync(path.resolve(CWD, "node_modules"))) {
-        console.log("🤖️ install node modules ... \n")
+        console.log("🎒  正在安装npm包，请稍后 ⌛️ ... \n")
         exec("npm install")
     }
 }
@@ -31,7 +31,8 @@ const webpack = path.resolve(
 
 module.exports = {
     start: (port) => {
-        check_modules()
+      console.log(path.base())
+        installNodeModules()
         process.env.MODE = "start"
         luban.port = port || luban.port
         setTimeout(() => {
@@ -39,7 +40,7 @@ module.exports = {
         }, 1)
     },
     test: (creat_server) => {
-        check_modules()
+        installNodeModules()
         process.env.MODE = "test"
         exec(
             webpack +
@@ -55,7 +56,7 @@ module.exports = {
         creat_server && server.start(luban)
     },
     release: (creat_server) => {
-        check_modules()
+        installNodeModules()
         process.env.MODE = "release"
         exec(
             webpack +
@@ -73,7 +74,7 @@ module.exports = {
     init: (name, esmode) => {
         if (!name || !name.length) {
             console.log("App name is required")
-            process.exit(1)
+            process.exit()
         }
         cp(
             "-R",
