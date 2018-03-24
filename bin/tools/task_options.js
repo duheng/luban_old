@@ -1,15 +1,15 @@
 const inquirer = require("inquirer");
-const fs = require("fs");
-const path = require("path");
-const task = require("./task");
-const CWD = process.cwd();
+const  fs = require("fs");
+const  path = require("path");
+const  task = require("./task");
+const  CWD = process.cwd();
 
 const isExists = (name) => {
   return fs.existsSync(path.resolve(CWD, name));
 }
 
 const tasks = {
-  init: _ => {
+  init: () => {
     inquirer.prompt(
       [
         {
@@ -34,17 +34,17 @@ const tasks = {
     );
   },
 
-  start: _ => {
+  start: () => {
     task.start();
   },
 
 };
 
-const options = [
+var options = [
   {
     type: "list",
     name: "task",
-    message: "请选择要执行的任务: ",
+    message: "选择要执行的任务: ",
     choices: [
       {
         name: "开发调试",
