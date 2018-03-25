@@ -8,61 +8,83 @@ const isExists = (name) => {
   return fs.existsSync(path.resolve(CWD, name));
 }
 
+const show_help = () => {
+  var options = [
+    {
+      type: "list",
+      name: "task",
+      message: "选择要执行的任务: ",
+      choices: [
+        {
+          name: "开发调试",
+          value: "start"
+        },
+        {
+          name: "初始化新项目",
+          value: "init"
+        },
+
+      ]
+    }
+  ]
+
+  inquirer.prompt(options, (answers) => {
+    tasks[answers.task]();
+  });
+}
+
 const tasks = {
   init: () => {
-    inquirer.prompt(
-      [
-        {
-          type: "input",
-          name: "appName",
-          message: "请输入项目的名称: [英文]",
-          validate: (value) => {
-            if (isExists(value)) {
-              return "该文件已存在, 换一个名字吧";
-            }
-            if (!value && !value.length) {
-              return "luban 需要您提供项目名称";
-            }
+    const questions = [
+      {
+         type: 'list',
+         name: 'framework',
+         message: '请选择您需要的基础架构：',
+         choices: [
+           {
+             name: "react",
+             value: "react"
+           },
+           {
+             name: "react+redux",
+             value: "react_redux"
+           }
+         ],
+         filter: (val) => {
+           console.error(val)
+           return val.toLowerCase()
+         }
+      },
+      {
+        type: "input",
+        name: "appName",
+        message: "请输入项目的名称: [英文]",
+        validate: (value) => {
+          if (isExists(value)) {
+            console.error("\n\n该文件已存在")
+            return process.exit()
 
-            return true;
           }
+          if (!value && !value.length) {
+            console.error("\n\n您还没有输入目名称")
+            return process.exit()
+          }
+
+          return true;
         }
-      ],
+      }
+    ]
+    inquirer.prompt(
+      questions,
       (answers) => {
-        task["init"](answers.appName);
+        task["init"](answers);
       }
     );
   },
 
   start: () => {
-    task.start();
-  },
-
-};
-
-var options = [
-  {
-    type: "list",
-    name: "task",
-    message: "选择要执行的任务: ",
-    choices: [
-      {
-        name: "开发调试",
-        value: "start"
-      },
-      {
-        name: "初始化新项目",
-        value: "init"
-      },
-
-    ]
+    task.start()
   }
-];
-
-const show_help = () => {
-  inquirer.prompt(options, (answers) => {
-    tasks[answers.task]();
-  });
 }
 
 module.exports = {

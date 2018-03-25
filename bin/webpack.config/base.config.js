@@ -1,7 +1,7 @@
 const webpack = require("webpack")
 const TransferWebpackPlugin = require("transfer-webpack-plugin")
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
-
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require("path")
 const CWD = process.cwd()
 
@@ -19,18 +19,6 @@ const webpackConfig = config => {
         externals: config.externals || {},
         module: {
             rules: [
-                config.eslint
-                    ? {
-                          enforce: "pre",
-                          test: /\.(js|jsx)$/,
-                          loader: "eslint",
-                          include: [path.resolve(CWD, config.base)],
-                          exclude: /(node_modules|bower_components)/,
-                          options: {
-                              configFile: path.resolve(CWD, ".eslintrc")
-                          }
-                      }
-                    : {},
                 {
                     test: /\.js/,
                     loader: "babel",
@@ -136,6 +124,7 @@ const webpackConfig = config => {
             moduleExtensions: ["-loader"]
         },
         plugins: [
+            new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
             new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
             new webpack.ProvidePlugin({
                 React: "react"

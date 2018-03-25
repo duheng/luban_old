@@ -54,7 +54,6 @@ module.exports = config => {
                     config.template.path,
                     "utf8"
                 )
-                console.log(templateParams)
                 let tmpl = require("blueimp-tmpl").tmpl
                 return tmpl(indexTemplate, templateParams)
             }

@@ -31,7 +31,6 @@ const webpack = path.resolve(
 
 module.exports = {
     start: (port) => {
-      console.log(path.base())
         installNodeModules()
         process.env.MODE = "start"
         luban.port = port || luban.port
@@ -71,21 +70,20 @@ module.exports = {
         )
         creat_server && server.start(luban)
     },
-    init: (name, esmode) => {
-        if (!name || !name.length) {
-            console.log("App name is required")
-            process.exit()
-        }
-        cp(
-            "-R",
-            path.resolve(__dirname, "..", "templates/react/app/*"),
-            path.resolve(CWD, name)
-        )
-        cp(
-            "-R",
-            path.resolve(__dirname, "..", "templates/react/app/.*"),
-            path.resolve(CWD, name)
-        )
-        console.log("项目", name, "创建成功🌹")
+    init: (options) => {
+      const { framework, appName} = options
+      console.log(framework)
+
+        // cp(
+        //     "-R",
+        //     path.resolve(__dirname, "..", "templates/react/app/*"),
+        //     path.resolve(CWD, appName)
+        // )
+        // cp(
+        //     "-R",
+        //     path.resolve(__dirname, "..", "templates/react/app/.*"),
+        //     path.resolve(CWD, appName)
+        // )
+        console.log("项目", appName, "创建成功🌹")
     }
 }

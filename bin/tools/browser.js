@@ -40,7 +40,8 @@ function openBrowser(luban) {
   "    █████ ░░████████ ████████ ░░████████ ████ █████",
   "   ░░░░░   ░░░░░░░░ ░░░░░░░░   ░░░░░░░░ ░░░░ ░░░░░ ",
     ].join('\n'));
-    console.log('🌹  start luban service at http://' + luban.host + ':' + luban.port, browserToOpenWith ? ' browser:' + browserToOpenWith : '');
+
+    console.log('\n\n 🌹  start luban service at http://' + luban.host + ':' + luban.port, browserToOpenWith ? ' browser:' + browserToOpenWith : '');
     open('http://' + luban.host + ':' + luban.port, { app: browserToOpenWith || 'google chrome' });
 }
 

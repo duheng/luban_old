@@ -18,19 +18,17 @@ commander
     .option("-p, --port", "cmd 自定义端口号", config.port)
     .arguments("[mode] [name]")
     .action(function(mode, name) {
-      console.log('^^^^^^^^^^^',process.argv)
         __mode = mode
         if (!luban.hasluban() && mode !== "init") {
             console.error("请设置luban的配置文件luban.json或者luban.config.js \n")
-            process.exit(1)
+            process.exit()
         }
 
         let modes = ["init", "start", "test", "release"]
         if (modes.indexOf(mode) === -1) {
-            console.log("luban暂不支持该命令 \n")
+            console.error("luban暂不支持该命令 \n")
             task_options.help()
         } else {
-            rm("-rf", path.resolve(CWD, config.build))
             task[mode](name)
         }
     })
