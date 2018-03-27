@@ -15,7 +15,8 @@ var __mode
 
 commander
     .version(packages.version)
-    .option("-p, --port", "cmd 自定义端口号", config.port)
+    .option('-i, --init', '初始化项目文件夹')
+    .option("-p, --port", "服务端口号", config.port)
     .arguments("[mode] [name]")
     .action(function(mode, name) {
         __mode = mode
