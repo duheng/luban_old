@@ -49,15 +49,13 @@ module.exports = {
     creat_server && server.start()
   },
   init: options => {
-    const { framework, redux, mock, appName } = options || {}
-    console.log(options)
+    const { framework = 'react', redux = true, mock = true, appName } = options || {}
     if (framework === 'react') {
       source.initReact(options)
     } else if (framework === 'vue') {
       console.log('vue项目还在建设中...')
       process.exit()
     }
-
     console.log('项目', appName, '创建成功🌹')
   },
 }
