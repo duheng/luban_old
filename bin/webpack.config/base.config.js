@@ -44,16 +44,7 @@ const webpackConfig = config => {
                         },
                         {
                             loader: "postcss",
-                            options: is_production
-                                ? {
-                                      config: {
-                                          path: path.resolve(
-                                              __dirname,
-                                              "postcss.config.js"
-                                          )
-                                      }
-                                  }
-                                : {
+                            options: {
                                       sourceMap: "inline",
                                       config: {
                                           path: path.resolve(

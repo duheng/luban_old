@@ -2,13 +2,9 @@
 
 const program = require('commander')
 const path = require('path')
-// const os = require("os");
 const fs = require('fs')
 const source = require('../source')
-const config = require('./config')
 const server = require('./server')
-const luban = config.getluban()
-const watch = require('watch')
 const CWD = process.cwd()
 
 require('shelljs/global')
@@ -26,9 +22,8 @@ module.exports = {
   start: port => {
     installNodeModules()
     process.env.MODE = 'start'
-    luban.port = port || luban.port
     setTimeout(() => {
-      server.start(luban)
+      server.start(port)
     }, 1)
   },
   test: creat_server => {
@@ -40,7 +35,7 @@ module.exports = {
         path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
         ' --progress',
     )
-    creat_server && server.start(luban)
+    creat_server && server.start()
   },
   release: creat_server => {
     installNodeModules()
@@ -51,12 +46,11 @@ module.exports = {
         path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
         ' --progress',
     )
-    creat_server && server.start(luban)
+    creat_server && server.start()
   },
   init: options => {
     const { framework, redux, mock, appName } = options || {}
     console.log(options)
-
     if (framework === 'react') {
       source.initReact(options)
     } else if (framework === 'vue') {

@@ -41,12 +41,6 @@ module.exports = {
             return extend(default_luban, luban);
         }
 
-        if(isExists('luban.config.js')) {
-            var filepath = path.resolve(CWD, 'luban.config.js');
-            var luban = require(filepath);
-            return extend(default_luban, luban);
-        }
-
         return default_luban;
 
     },

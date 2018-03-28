@@ -1,85 +1,63 @@
-var path = require('path'),
-  express = require('express'),
-  webpack = require('webpack'),
-  fs = require('fs'),
-  CWD = process.cwd(),
-  webpackConfig = require('../webpack.config/development.config'),
-  browser = require('./browser'),
-  proxy = require('http-proxy-middleware'),
-  Mock = require('mockjs')
+const Koa = require('koa')
+const staticServe = require("koa-static")
+const koaWebpackMiddleware = require('koa-webpack-middleware')
+const webpackDevMiddleware = koaWebpackMiddleware.devMiddleware
+const webpackHotMiddleware = koaWebpackMiddleware.hotMiddleware
+const path = require('path')
+const webpack = require('webpack')
+const fs = require('fs')
+const CWD = process.cwd()
+const userConfig = require('./config').getluban()
+const devConfig = require('../webpack.config/development.config')
+const mock = require('./mock')
+const browser = require('./browser')
 
-module.exports.start = function(luban) {
-  var config = webpackConfig(luban),
-    app = express(),
+const app = new Koa()
+
+module.exports.start = function(userPort) {
+  userConfig.port =  !!userPort ? userPort : userConfig.port
+  const config = devConfig(userConfig)
+  const compile = webpack(config)
     is_start = process.env.MODE == 'start',
-    compiler = webpack(config)
   console.log('###################', process.env.MODE)
-  is_start &&
-    app.use(
-      require('webpack-dev-middleware')(compiler, {
-        noInfo: false,
-        publicPath: '/',
-        stats: {
+  const wdm = webpackDevMiddleware(compile, {
+      noInfo: false,
+      watchOptions: {
+          aggregateTimeout: 300,
+          poll: true
+      },
+      reload: true,
+      publicPath: "/",
+      headers: { "X-Custom-Header": "yes" },
+      stats: {
           colors: true,
           cached: false,
           exclude: [/node_modules[\\\/]/],
-        },
-      }),
-    )
-
-  is_start && app.use(require('webpack-hot-middleware')(compiler))
-
-  // mock
-  // var mock_data = path.resolve(CWD, 'mock.js')
-  // if (fs.existsSync(mock_data)) {
-  //   var data = require(path.resolve(CWD, 'mock.js'))
-  //   if (!Array.isArray(data)) {
-  //     console.error('模拟数据必须是数组')
-  //   } else {
-  //     data.map(function(item) {
-  //       if (item.proxy) {
-  //         app.use(
-  //           proxy(item.path, {
-  //             target: item.proxy,
-  //             changeOrigin: item.changeOrigin !== false,
-  //             ws: item.ws !== false,
-  //             pathRewrite: item.pathRewrite,
-  //             headers: item.headers,
-  //           }),
-  //         )
-  //       } else {
-  //         var method = item.method || 'get'
-  //         app[method](item.path, function(req, res) {
-  //           var data = Mock.mock(item.data)
-  //           res.send(data)
-  //         })
-  //       }
-  //     })
-  //   }
-  // }
-
-  app.use(express.static(path.resolve(CWD, luban.build)))
-
-  app.get('*', function(req, res, next) {
-    var index_name = 'index.html'
-
-    var filename = path.join(compiler.outputPath, index_name)
-
-    compiler.outputFileSystem.readFile(filename, function(err, result) {
-      if (err) {
-        return next(err)
       }
-      res.set('content-type', 'text/html')
-      res.send(result)
-      res.end()
+  })
+  is_start && app.use(wdm)
+  is_start && app.use(webpackHotMiddleware(compile))
+  app.use(staticServe(path.join(CWD, userConfig.build),{ extensions: ['html']}));
+// 如果业务文件夹存在mock.js则执行mock服务
+  if (fs.existsSync(path.resolve(CWD, 'mock.js'))) {
+    const data = require(path.resolve(CWD, 'mock.js'))
+    mock.init(app, data)
+  }
+
+  const server = app.listen( userConfig.port, userConfig.host,  (err) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+      browser.openBrowser(userConfig)
+  })
+
+  process.on('SIGTERM', () => {
+    console.log('Stopping dev server')
+    wdm.close()
+    server.close(() => {
+      process.exit(0)
     })
   })
 
-  app.listen(luban.port, luban.host, function(err) {
-    if (err) {
-      console.log(err)
-      return
-    }
-    browser.openBrowser(luban)
-  })
 }
