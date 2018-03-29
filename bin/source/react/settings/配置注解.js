@@ -42,9 +42,6 @@ module.exports = {
     // 是否开启 CSS Modules
     css_modules: false,
 
-    // 是否开启eslint
-    eslint: false,
-
     // 模版信息
     template: {
         title: "",
