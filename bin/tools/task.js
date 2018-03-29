@@ -26,7 +26,7 @@ module.exports = {
       server.start(port)
     }, 1)
   },
-  test: creat_server => {
+  test: _ => {
     installNodeModules()
     process.env.MODE = 'test'
     exec(
@@ -35,9 +35,9 @@ module.exports = {
         path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
         ' --progress',
     )
-    creat_server && server.start()
+    server.start()
   },
-  release: creat_server => {
+  release: _ => {
     installNodeModules()
     process.env.MODE = 'release'
     exec(
@@ -46,7 +46,6 @@ module.exports = {
         path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
         ' --progress',
     )
-    creat_server && server.start()
   },
   init: options => {
     const { framework = 'react', redux = true, mock = true, appName } = options || {}
