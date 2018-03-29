@@ -57,20 +57,6 @@ const plugins = [
     cache: true,
     templateContent: function(templateParams, compilation) {
       var indexTemplate = fs.readFileSync(config.template.path, 'utf8')
-
-      Object.keys(compilation.assets).forEach(function(key) {
-        if (key.indexOf('manifest') !== -1) {
-          var chunkManifest = compilation.assets[key]._value
-          if (config.globals.crossOrigin && config.globals.crossOrigin[process.env.MODE]) {
-            var param = chunkManifest.match(/(\w+)\.type/)[1]
-            var replaceStr =
-              param + '.crossOrigin=' + JSON.stringify(config.globals.crossOrigin[process.env.MODE])
-            chunkManifest = chunkManifest.replace(/(\w+\.type)/, replaceStr + ',$1')
-          }
-          templateParams.chunkManifest = chunkManifest
-          delete compilation.assets[key]
-        }
-      })
       let tmpl = require('blueimp-tmpl').tmpl
       return tmpl(indexTemplate, templateParams)
     },
@@ -85,10 +71,19 @@ module.exports = _ => {
       vendor: config.vendor || ['react', 'react-dom'],
     },
     plugins,
-    //  optimization: {
-    //     splitChunks: {
-    //         chunks: "all",
-    //     }
-    // },
+    optimization: {
+      // splitChunks: {
+      //   cacheGroups: {
+      //     commons: {
+      //       test: /[\\/]node_modules[\\/]/,
+      //       name: 'vendor',
+      //       chunks: 'all',
+      //     },
+      //   },
+      // },
+      // runtimeChunk: {
+      //   name: 'common',
+      // },
+    },
   })
 }

@@ -21,7 +21,7 @@ commander
   .action(function(mode, name) {
     __mode = mode
     if (!luban.hasOptions() && mode !== 'init') {
-      console.error('请设置luban的配置文件luban.json或者luban.config.js \n')
+      console.error('请设置luban的配置文件luban.json \n')
       process.exit()
     }
 
