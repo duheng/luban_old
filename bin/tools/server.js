@@ -7,7 +7,7 @@ const path = require('path')
 const webpack = require('webpack')
 const fs = require('fs')
 const CWD = process.cwd()
-const userConfig = require('./config').getOptions()
+const userConfig = require('./utils').getOptions()
 const devConfig = require('../webpack.config/development.config')
 const browser = require('./browser')
 const mock = require('./mock')
@@ -35,14 +35,17 @@ module.exports.start = function(userPort) {
       exclude: [/node_modules[\\\/]/],
     },
   })
-  is_start && app.use(wdm)
-  is_start && app.use(webpackHotMiddleware(compile))
-  app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
-  // 如果业务文件夹存在mock.js则执行mock服务
-  if (fs.existsSync(path.resolve(CWD, 'mock.js'))) {
-    const data = require(path.resolve(CWD, 'mock.js'))
-    mock.init(app, data)
+  if (is_start) {
+    app.use(wdm)
+    app.use(webpackHotMiddleware(compile))
+    // 如果业务文件夹存在mock.js则执行mock服务
+    if (fs.existsSync(path.resolve(CWD, 'mock.js'))) {
+      const data = require(path.resolve(CWD, 'mock.js'))
+      mock.init(app, data)
+    }
   }
+
+  app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
 
   const server = app.listen(userConfig.port, userConfig.host, err => {
     if (err) {

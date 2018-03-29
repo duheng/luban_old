@@ -8,7 +8,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 const baseConfig = require('./base.config')
-const config = require('../tools/config').getOptions()
+const config = require('../tools/utils').getOptions()
 
 const plugins = [
   // new ExtractTextPlugin({

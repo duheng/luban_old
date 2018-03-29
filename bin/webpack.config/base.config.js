@@ -1,139 +1,55 @@
-const webpack = require("webpack")
-const TransferWebpackPlugin = require("transfer-webpack-plugin")
+const webpack = require('webpack')
+const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
-const path = require("path")
+const path = require('path')
 const CWD = process.cwd()
+const modules = require('./module')
 
 const webpackConfig = config => {
-    // console.log('process.env.MODE__________', process.env.MODE)
-    const is_production = process.env.MODE !== "start"
-    console.log("is_production______", is_production)
-    return {
-        output: {
-            path: path.resolve(CWD, config.build),
-            publicPath: config.static[process.env.MODE],
-            chunkFilename: "js/[name]-[chunkhash:8].js",
-            filename: "js/[name].js"
-        },
-        externals: config.externals || {},
-        module: {
-            rules: [
-                {
-                    test: /\.js/,
-                    loader: "babel",
-                    query: is_production
-                        ? require("./babel.production")
-                        : require("./babel.development"),
-                    exclude: /(node_modules|bower_components)/
-                },
-                {
-                    test: /\.(css|less|scss)$/,
-                    use: [
-                        "style",
-                        {
-                            loader: "css",
-                            options: config.css_modules
-                                ? {
-                                      modules: true,
-                                      importLoaders: 1,
-                                      localIdentName:
-                                          "[name]__[local]__[hash:base64:8]"
-                                  }
-                                : {}
-                        },
-                        {
-                            loader: "postcss",
-                            options: {
-                                      sourceMap: "inline",
-                                      config: {
-                                          path: path.resolve(
-                                              __dirname,
-                                              "postcss.config.js"
-                                          )
-                                      }
-                                  }
-                        },
-                        "resolve-url",
-                        "sass",
-                        "less"
-                    ]
-                },
-                {
-                    test: /\.(jpe?g|png|svg|gif|ico)$/,
-                    use: [
-                        {
-                            loader: "url",
-                            options: {
-                                limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
-                                name:
-                                    config.assets +
-                                    "/images/[name]-[hash:8].[ext]"
-                            }
-                        },
-                        {
-                            loader: "image-webpack",
-                            query: {
-                                mozjpeg: {
-                                    progressive: true
-                                },
-                                gifsicle: {
-                                    interlaced: false
-                                },
-                                optipng: {
-                                    optimizationLevel: 7
-                                },
-                                pngquant: {
-                                    quality: "65-90",
-                                    speed: 4
-                                }
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
-                    loader: "file",
-                    options: {
-                        name: config.assets + "/fonts/[name]-[hash:8].[ext]"
-                    }
-                }
-            ]
-        },
-        resolve: {
-            modules: [
-                CWD,
-                path.resolve(__dirname, "..", "..", "node_modules"),
-                "node_modules",
-                "bower_components"
-            ],
-            alias: config.alias,
-            extensions: [".js", ".json", ".jsx", ".scss", ".css", ".less"]
-        },
-        resolveLoader: {
-            modules: [path.resolve(__dirname, "..", "..", "node_modules")],
-            moduleExtensions: ["-loader"]
-        },
-        plugins: [
-            new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
-            new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
-            new webpack.ProvidePlugin({
-                React: "react"
-            }),
-            new TransferWebpackPlugin(
-                [
-                    {
-                        from: path.join(
-                            config.base,
-                            config.assets || "assets"
-                        ),
-                        to: path.join(config.assets || "assets")
-                    }
-                ],
-                path.resolve(CWD)
-            )
-        ]
-    }
+  // console.log('process.env.MODE__________', process.env.MODE)
+  const is_production = process.env.MODE !== 'start'
+  console.log('is_production______', is_production)
+  return {
+    output: {
+      path: path.resolve(CWD, config.build),
+      publicPath: config.static[process.env.MODE],
+      chunkFilename: 'js/[name]-[chunkhash:8].js',
+      filename: 'js/[name].js',
+    },
+    externals: config.externals || {},
+    module: modules.init(config),
+    resolve: {
+      modules: [
+        CWD,
+        path.resolve(__dirname, '..', '..', 'node_modules'),
+        'node_modules',
+        'bower_components',
+      ],
+      alias: config.alias,
+      extensions: ['.js', '.json', '.jsx', '.scss', '.css', '.less'],
+    },
+    resolveLoader: {
+      modules: [path.resolve(__dirname, '..', '..', 'node_modules')],
+      moduleExtensions: ['-loader'],
+    },
+    plugins: [
+      new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
+      new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
+      new webpack.ProvidePlugin({
+        React: 'react',
+      }),
+      new TransferWebpackPlugin(
+        [
+          {
+            from: path.join(config.base, config.assets || 'assets'),
+            to: path.join(config.assets || 'assets'),
+          },
+        ],
+        path.resolve(CWD),
+      ),
+    ],
+  }
 }
 
 module.exports = webpackConfig

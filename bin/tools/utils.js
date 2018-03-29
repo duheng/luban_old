@@ -27,23 +27,20 @@ const isExists = filename => {
   return fs.existsSync(path.resolve(CWD, filename))
 }
 
+const getOptions = _ => {
+  if (isExists('luban.json')) {
+    var filepath = path.resolve(CWD, 'luban.json')
+    var luban = require(filepath)
+    return extend(default_luban, luban)
+  }
+  return default_luban
+}
+
+const hasOptions = _ => {
+  return isExists('luban.json')
+}
+
 module.exports = {
-  getOptions: _ => {
-    if (isExists('package.json')) {
-      var filepath = path.resolve(CWD, 'package.json')
-      var appconfig = require(filepath)
-      process.env.luban_TAG = appconfig.version
-    }
-
-    if (isExists('luban.json')) {
-      var filepath = path.resolve(CWD, 'luban.json')
-      var luban = require(filepath)
-      return extend(default_luban, luban)
-    }
-
-    return default_luban
-  },
-  hasOptions: _ => {
-    return isExists('luban.config.js') || isExists('luban.json')
-  },
+  getOptions,
+  hasOptions,
 }

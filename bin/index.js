@@ -6,7 +6,7 @@ const fs = require('fs')
 const task = require('./tools/task')
 const task_options = require('./tools/task_options')
 const packages = require('../package.json')
-const luban = require('./tools/config')
+const luban = require('./tools/utils')
 const CWD = process.cwd()
 
 require('shelljs/global')
