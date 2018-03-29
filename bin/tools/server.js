@@ -1,16 +1,17 @@
 const Koa = require('koa')
 const staticServe = require('koa-static')
-const koaWebpackMiddleware = require('koa-webpack-middleware')
-const webpackDevMiddleware = koaWebpackMiddleware.devMiddleware
-const webpackHotMiddleware = koaWebpackMiddleware.hotMiddleware
+const { devMiddleware, hotMiddleware } = require('koa-webpack-middleware')
 const path = require('path')
-const webpack = require('webpack')
 const fs = require('fs')
+const webpack = require('webpack')
 const CWD = process.cwd()
+const route = require('koa-route')
+const proxy = require('koa-proxies')
+const Mockjs = require('mockjs')
+
 const userConfig = require('./utils').getOptions()
 const devConfig = require('../webpack.config/development.config')
 const browser = require('./browser')
-const mock = require('./mock')
 
 const app = new Koa()
 
@@ -20,7 +21,7 @@ module.exports.start = function(userPort) {
   const compile = webpack(config)
   is_start = process.env.MODE == 'start'
   console.log('###################', process.env.MODE)
-  const wdm = webpackDevMiddleware(compile, {
+  const wdm = devMiddleware(compile, {
     noInfo: false,
     watchOptions: {
       aggregateTimeout: 300,
@@ -35,13 +36,32 @@ module.exports.start = function(userPort) {
       exclude: [/node_modules[\\\/]/],
     },
   })
+
   if (is_start) {
     app.use(wdm)
-    app.use(webpackHotMiddleware(compile))
+    app.use(hotMiddleware(compile))
     // 如果业务文件夹存在mock.js则执行mock服务
     if (fs.existsSync(path.resolve(CWD, 'mock.js'))) {
       const data = require(path.resolve(CWD, 'mock.js'))
-      mock.init(app, data)
+      data.map(item => {
+        let method = item.method || 'get'
+        if (item.proxy) {
+          app.use(
+            proxy(item.path, {
+              target: item.proxy,
+              changeOrigin: true,
+              logs: true,
+            }),
+          )
+        } else {
+          app.use(
+            route[method.toLowerCase()](item.path, async (ctx, next) => {
+              ctx.body = await Mockjs.mock(item.data)
+              next()
+            }),
+          )
+        }
+      })
     }
   }
 

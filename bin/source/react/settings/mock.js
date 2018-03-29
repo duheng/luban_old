@@ -21,7 +21,7 @@ module.exports = [{
             'id|+1': 1
         }]
     }
-}, , {
+} , {
     path: '/luban',
     proxy: 'http://api.luban.com',
 }]

@@ -48,7 +48,7 @@ module.exports = {
     )
   },
   init: options => {
-    const { framework = 'react', redux = true, mock = true, appName } = options || {}
+    const { framework = 'react', redux = true, mock = true, appName = 'demo' } = options || {}
     if (framework === 'react') {
       source.initReact(options)
     } else if (framework === 'vue') {

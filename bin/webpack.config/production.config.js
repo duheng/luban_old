@@ -54,6 +54,7 @@ const plugins = [
       minifyCSS: true,
       removeComments: false,
     },
+    cache: true,
     templateContent: function(templateParams, compilation) {
       var indexTemplate = fs.readFileSync(config.template.path, 'utf8')
 
