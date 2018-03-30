@@ -3,7 +3,7 @@ module.exports = {
     host: "0.0.0.0",
 
     // 服务端口
-    port: "9527",
+    port: "3001",
 
     // 当前项目根目录，默认src
     base: "src",
@@ -27,15 +27,6 @@ module.exports = {
     // 第三方库在这里配置
     vendor: ["react", "react-dom"],
 
-    // 自定义路径
-    alias: {
-        scss: "scss",
-        components: "components",
-        utils: "utils",
-        assets: "assets",
-        app: "app"
-    },
-
     // source map
     devtool: "source-map",
 
@@ -54,15 +45,6 @@ module.exports = {
 
     // 页面所在文件夹
     pages: "pages",
-
-    // 组件文件夹
-    components: "components",
-
-    // scss 文件夹
-    scss: "scss",
-
-    // 先泽react或者vue编译模式，默认react
-    cpmode: "react",
 
     // base64图片限制，默认10k，小于10k的图片用base64内嵌进页面，
     base64_image_limit: 10240 // 10k

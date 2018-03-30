@@ -1,6 +1,6 @@
 const path = require('path')
 
-const init = (config) => {
+const init = config => {
   return {
     rules: [
       {
@@ -77,7 +77,6 @@ const init = (config) => {
     ],
   }
 }
-
 
 module.exports = {
   init,

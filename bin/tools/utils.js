@@ -40,7 +40,26 @@ const hasOptions = _ => {
   return isExists('luban.json')
 }
 
+const genFileName = jsDir => {
+  var names = fs.readdirSync(jsDir)
+  var map = []
+  names.forEach(function(name) {
+    map.push(name)
+  })
+  return map
+}
+
+const genAlias = jsDir => {
+  var names = fs.readdirSync(jsDir)
+  var map = {}
+  names.forEach(function(name) {
+    map[name] = path.resolve(jsDir, name)
+  })
+  return map
+}
 module.exports = {
   getOptions,
   hasOptions,
+  genFileName,
+  genAlias,
 }

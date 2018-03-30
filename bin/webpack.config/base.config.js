@@ -5,9 +5,9 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path')
 const CWD = process.cwd()
 const modules = require('./module')
+const { genAlias } = require('../tools/utils')
 
 const webpackConfig = config => {
-  // console.log('process.env.MODE__________', process.env.MODE)
   const is_production = process.env.MODE !== 'start'
   console.log('is_production______', is_production)
   return {
@@ -26,7 +26,7 @@ const webpackConfig = config => {
         'node_modules',
         'bower_components',
       ],
-      alias: config.alias,
+      alias: genAlias(path.resolve(CWD, config.base)),
       extensions: ['.js', '.json', '.jsx', '.scss', '.css', '.less'],
     },
     resolveLoader: {
