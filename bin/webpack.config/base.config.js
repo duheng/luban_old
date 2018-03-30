@@ -2,6 +2,9 @@ const webpack = require('webpack')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const HappyPack = require('happypack')
+const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
+
 const path = require('path')
 const CWD = process.cwd()
 const modules = require('./module')
@@ -34,6 +37,16 @@ const webpackConfig = config => {
       moduleExtensions: ['-loader'],
     },
     plugins: [
+      new HappyPack({
+        id: 'jsx',
+        threadPool: happyThreadPool,
+        loaders: [
+          {
+            path: 'babel',
+            query: require('./babel'),
+          },
+        ],
+      }),
       new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
       new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
       new webpack.ProvidePlugin({

@@ -38,8 +38,8 @@ module.exports = config => {
       },
     }),
   ]
-
-  baseConfig(config).module.rules[0].query.env = {
+  //console.log(baseConfig(config).plugins[0].config.loaders[0].query)
+  baseConfig(config).plugins[0].config.loaders[0].query.env = {
     development: {
       plugins: [
         [

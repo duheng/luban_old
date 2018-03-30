@@ -1,12 +1,10 @@
 const path = require('path')
-
 const init = config => {
   return {
     rules: [
       {
         test: /\.js/,
-        loader: 'babel',
-        query: require('./babel'),
+        use: 'happypack/loader?id=jsx',
         exclude: /(node_modules|bower_components)/,
       },
       {
