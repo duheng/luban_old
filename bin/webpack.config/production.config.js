@@ -71,19 +71,19 @@ module.exports = _ => {
       vendor: config.vendor || ['react', 'react-dom'],
     },
     plugins,
-    optimization: {
-      // splitChunks: {
-      //   cacheGroups: {
-      //     commons: {
-      //       test: /[\\/]node_modules[\\/]/,
-      //       name: 'vendor',
-      //       chunks: 'all',
-      //     },
-      //   },
-      // },
-      // runtimeChunk: {
-      //   name: 'common',
-      // },
-    },
+    // optimization: {
+    //   splitChunks: {
+    //     cacheGroups: {
+    //       commons: {
+    //         test: /node_modules/,
+    //         name: 'vendor',
+    //         chunks: 'all',
+    //       },
+    //     },
+    //   },
+    //   runtimeChunk: {
+    //     name: 'runtime',
+    //   },
+    // },
   })
 }

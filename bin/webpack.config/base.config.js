@@ -37,6 +37,7 @@ const webpackConfig = config => {
       moduleExtensions: ['-loader'],
     },
     plugins: [
+      new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
       new HappyPack({
         id: 'jsx',
         threadPool: happyThreadPool,
@@ -47,7 +48,6 @@ const webpackConfig = config => {
           },
         ],
       }),
-      new CleanWebpackPlugin([path.resolve(CWD, config.build)]),
       new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
       new webpack.ProvidePlugin({
         React: 'react',
