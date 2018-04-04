@@ -41,7 +41,7 @@ const init = config => {
           {
             loader: 'url',
             options: {
-              limit: config.base64_image_limit, // 20k以内的图片用base64，可配置
+              limit: config.image_limit, // 20k以内的图片用base64，可配置
               name: config.assets + '/images/[name]-[hash:8].[ext]',
             },
           },

@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+require('shelljs/global')
 const commander = require('commander')
 const path = require('path')
 const fs = require('fs')
@@ -8,9 +9,8 @@ const task_options = require('./tools/task_options')
 const packages = require('../package.json')
 const luban = require('./tools/utils')
 const CWD = process.cwd()
-
-require('shelljs/global')
 const config = luban.getOptions()
+
 var __mode
 
 commander
@@ -18,7 +18,7 @@ commander
   .option('-i, --init', '初始化项目文件夹')
   .option('-p, --port', '服务端口号')
   .arguments('[mode] [name]')
-  .action(function(mode, name) {
+  .action((mode, name) => {
     __mode = mode
     if (!luban.hasOptions() && mode !== 'init') {
       console.error('请设置luban的配置文件luban.json \n')

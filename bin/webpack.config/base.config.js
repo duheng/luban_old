@@ -3,7 +3,7 @@ const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HappyPack = require('happypack')
-const happyThreadPool = HappyPack.ThreadPool({ size: 5 })
+const happyThreadPool = HappyPack.ThreadPool({ size: 6 })
 
 const path = require('path')
 const CWD = process.cwd()

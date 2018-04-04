@@ -1,5 +1,6 @@
 const merge = require('webpack-merge')
 const path = require('path')
+const { tmpl } = require('blueimp-tmpl')
 const fs = require('fs')
 const CWD = process.cwd()
 const webpack = require('webpack')
@@ -43,10 +44,6 @@ const plugins = [
     description: config.template.description,
     viewport: config.template.viewport,
     version: config.template.version,
-    chunksSortMode: (a, b) => {
-      var chunksOrder = ['vendor', 'shared']
-      return chunksOrder.indexOf(a.names[0]) - chunksOrder.indexOf(b.names[0])
-    },
     favicon: config.template.favicon,
     minify: {
       collapseWhitespace: true,
@@ -55,10 +52,9 @@ const plugins = [
       removeComments: false,
     },
     cache: true,
-    templateContent: function(templateParams, compilation) {
-      var indexTemplate = fs.readFileSync(config.template.path, 'utf8')
-      let tmpl = require('blueimp-tmpl').tmpl
-      return tmpl(indexTemplate, templateParams)
+    templateContent: data => {
+      let tpl = fs.readFileSync(config.template.path, 'utf8')
+      return tmpl(tpl, data)
     },
   }),
 ]
@@ -68,7 +64,7 @@ module.exports = _ => {
     mode: 'production',
     entry: {
       shared: path.resolve(CWD, config.base, config.pages),
-      vendor: config.vendor || ['react', 'react-dom'],
+      vendor: ['react', 'react-dom'],
     },
     plugins,
     // optimization: {

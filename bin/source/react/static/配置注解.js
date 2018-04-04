@@ -11,6 +11,9 @@ module.exports = {
     // 编译后的产出目录
     build: "dist",
 
+    // 页面所在文件夹
+    pages: "pages",
+
     // 静态资源地址
     static: {
         start: "",
@@ -23,12 +26,6 @@ module.exports = {
         test: "",
         release: "//api.luban.com/"
     },
-
-    // 第三方库在这里配置
-    vendor: ["react", "react-dom"],
-
-    // source map
-    devtool: "source-map",
 
     // 是否开启 CSS Modules
     css_modules: false,
@@ -43,9 +40,6 @@ module.exports = {
         path: "template.html"
     },
 
-    // 页面所在文件夹
-    pages: "pages",
-
     // base64图片限制，默认10k，小于10k的图片用base64内嵌进页面，
-    base64_image_limit: 10240 // 10k
+    image_limit: 10240 // 10k
 }

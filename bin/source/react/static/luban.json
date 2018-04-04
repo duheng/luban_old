@@ -3,6 +3,7 @@
     "port": "3001",
     "base": "src",
     "build": "dist",
+    "pages": "pages",
     "static": {
         "start": "",
         "test": "",
@@ -13,8 +14,6 @@
         "test": "",
         "release": "//api.luban.com/"
     },
-    "vendor": ["react", "react-dom"],
-    "devtool": "source-map",
     "css_modules": false,
     "template": {
         "title": "鲁班",
@@ -24,6 +23,5 @@
         "favicon": "",
         "path": "template.html"
     },
-    "pages": "pages",
-    "base64_image_limit": 10240
+    "image_limit": 10240
 }
