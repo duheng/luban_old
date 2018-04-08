@@ -1793,6 +1793,15 @@ cloneable-readable@^1.0.0:
     process-nextick-args "^2.0.0"
     readable-stream "^2.3.5"
 
+co-body@^5.1.0:
+  version "5.1.1"
+  resolved "https://registry.npmjs.org/co-body/-/co-body-5.1.1.tgz#d97781d1e3344ba4a820fd1806bddf8341505236"
+  dependencies:
+    inflation "^2.0.0"
+    qs "^6.4.0"
+    raw-body "^2.2.0"
+    type-is "^1.6.14"
+
 co@3.1.0:
   version "3.1.0"
   resolved "https://registry.npmjs.org/co/-/co-3.1.0.tgz#4ea54ea5a08938153185e15210c68d9092bc1b78"
@@ -1990,6 +1999,10 @@ copy-concurrently@^1.0.0:
 copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.npmjs.org/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
+
+copy-to@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/copy-to/-/copy-to-2.0.1.tgz#2680fbb8068a48d08656b6098092bdafc906f4a5"
 
 core-js@^2.4.0, core-js@^2.4.1, core-js@^2.5.0:
   version "2.5.3"
@@ -4039,6 +4052,10 @@ indexof@0.0.1:
   version "0.0.1"
   resolved "https://registry.npmjs.org/indexof/-/indexof-0.0.1.tgz#82dc336d232b9062179d05ab3293a66059fd435d"
 
+inflation@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/inflation/-/inflation-2.0.0.tgz#8b417e47c28f925a45133d914ca1fd389107f30f"
+
 inflight@^1.0.4:
   version "1.0.6"
   resolved "https://registry.npmjs.org/inflight/-/inflight-1.0.6.tgz#49bd6331d7d02d0c09bc910a1075ba8165b56df9"
@@ -4697,6 +4714,13 @@ kind-of@^5.0.0:
 kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.npmjs.org/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
+
+koa-bodyparser@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/koa-bodyparser/-/koa-bodyparser-4.2.0.tgz#bce6e08bc65f8709b6d1faa9411c7f0d8938aa54"
+  dependencies:
+    co-body "^5.1.0"
+    copy-to "^2.0.1"
 
 koa-compose@^3.0.0:
   version "3.2.1"
@@ -6675,7 +6699,7 @@ q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.npmjs.org/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
 
-qs@6.5.1, qs@~6.5.1:
+qs@6.5.1, qs@^6.4.0, qs@~6.5.1:
   version "6.5.1"
   resolved "https://registry.npmjs.org/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
 
@@ -6734,7 +6758,7 @@ range-parser@^1.0.3, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raw-body@2.3.2:
+raw-body@2.3.2, raw-body@^2.2.0:
   version "2.3.2"
   resolved "https://registry.npmjs.org/raw-body/-/raw-body-2.3.2.tgz#bcd60c77d3eb93cde0050295c3f379389bc88f89"
   dependencies:
@@ -7017,7 +7041,7 @@ replace-ext@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/replace-ext/-/replace-ext-1.0.0.tgz#de63128373fcbf7c3ccfa4de5a480c45a67958eb"
 
-request@2:
+request@2, request@^2.85.0:
   version "2.85.0"
   resolved "https://registry.npmjs.org/request/-/request-2.85.0.tgz#5a03615a47c61420b3eb99b7dba204f83603e1fa"
   dependencies:
@@ -8169,7 +8193,7 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-type-is@^1.5.5, type-is@~1.6.15:
+type-is@^1.5.5, type-is@^1.6.14, type-is@~1.6.15:
   version "1.6.16"
   resolved "https://registry.npmjs.org/type-is/-/type-is-1.6.16.tgz#f89ce341541c672b25ee7ae3c73dee3b2be50194"
   dependencies:
