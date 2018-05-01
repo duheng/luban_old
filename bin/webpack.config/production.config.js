@@ -12,10 +12,6 @@ const baseConfig = require('./base.config')
 const config = require('../tools/utils').getOptions()
 
 const plugins = [
-  // new ExtractTextPlugin({
-  //   filename: "css/[name]-[hash:8].css", // 生成的文件名
-  //   allChunks: true // 从所有chunk中提取
-  // }),
   new UglifyJsPlugin({
     uglifyOptions: {
       output: {
@@ -37,49 +33,82 @@ const plugins = [
   }),
   new HtmlWebpackPlugin({
     filename: 'index.html',
-    chunks: ['shared', 'vendor', 'manifest'],
-    excludeChunks: ['manifest'],
-    title: config.template.title,
-    keywords: config.template.keywords,
-    description: config.template.description,
-    viewport: config.template.viewport,
-    version: config.template.version,
-    favicon: config.template.favicon,
     minify: {
-      collapseWhitespace: true,
-      minifyJS: true,
-      minifyCSS: true,
-      removeComments: false,
+         removeComments: true,
+         collapseWhitespace: true,
+         removeRedundantAttributes: true,
+         useShortDoctype: true,
+         removeEmptyAttributes: true,
+         removeStyleLinkTypeAttributes: true,
+         keepClosingSlash: true,
+         minifyJS: true,
+         minifyCSS: true,
+         minifyURLs: true,
     },
-    cache: true,
+    inject: true, // 自动注入
     templateContent: data => {
       let tpl = fs.readFileSync(config.template.path, 'utf8')
       return tmpl(tpl, data)
     },
   }),
+  new ExtractTextPlugin({filename : 'css/[name]-[contenthash:8].css', allChunks:true})
 ]
 
+let __baseConfig = baseConfig(config)
+    __baseConfig.module.rules.map(item => {
+      if (/css|sass|less/.test(item.use)) {
+        item.use.shift()
+        item.use = ExtractTextPlugin.extract({
+          fallback: 'style',
+          use: item.use
+        })
+      }
+    })
+
 module.exports = _ => {
-  return merge(baseConfig(config), {
+
+  return merge(__baseConfig, {
     mode: 'production',
     entry: {
       shared: path.resolve(CWD, config.base, config.pages),
       vendor: ['react', 'react-dom'],
     },
     plugins,
-    // optimization: {
-    //   splitChunks: {
-    //     cacheGroups: {
-    //       commons: {
-    //         test: /node_modules/,
-    //         name: 'vendor',
-    //         chunks: 'all',
-    //       },
-    //     },
-    //   },
-    //   runtimeChunk: {
-    //     name: 'runtime',
-    //   },
-    // },
+    optimization: {
+      removeAvailableModules:true,
+      removeEmptyChunks:true,
+      mergeDuplicateChunks:true,
+      flagIncludedChunks:true,
+      occurrenceOrder:true,
+      providedExports:true,
+      usedExports:true,
+      minimize:true,
+  		splitChunks: {
+  			cacheGroups: {
+  				commons: {
+  					chunks: "initial",
+  					minChunks: 2,
+  					maxInitialRequests: 5, // The default limit is too small to showcase the effect
+  					minSize: 0 // This is example is too small to create commons chunks
+  				},
+  				vendor: {
+  					test: /node_modules/,
+  					chunks: "initial",
+  					name: "vendor",
+  					priority: 10,
+  					enforce: true
+  				},
+          styles: {
+           name: 'styles',
+           test: /\.css$/,
+           chunks: 'all',
+           enforce: true
+         }
+  			}
+  		}
+  	},
+    performance: {
+      hints:"error",
+    },
   })
 }

@@ -11,8 +11,6 @@ const modules = require('./module')
 const { genAlias } = require('../tools/utils')
 
 const webpackConfig = config => {
-  const is_production = process.env.MODE !== 'start'
-  console.log('is_production______', is_production)
   return {
     output: {
       path: path.resolve(CWD, config.build),

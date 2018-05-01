@@ -1,39 +1,61 @@
 const path = require('path')
+const CWD = process.cwd()
 const init = config => {
   return {
     rules: [
       {
         test: /\.js/,
         use: 'happypack/loader?id=jsx',
-        exclude: /(node_modules|bower_components)/,
+        include: [
+           path.join(path.resolve(CWD, config.base)),
+           // 注意包含 AMT 源文件目录
+           path.resolve(CWD, 'node_modules/amazeui-touch/js'),
+         ]
       },
       {
-        test: /\.(css|less|scss)$/,
+        test: /\.css$/,
         use: [
-          'style',
+          "style",
           {
-            loader: 'css',
-            options: config.css_modules
-              ? {
-                  modules: true,
-                  importLoaders: 1,
-                  localIdentName: '[name]__[local]__[hash:base64:8]',
-                }
-              : {},
+            loader: "css",
+            options:  config.css_modules
+              ?  {
+                modules: true,
+                localIdentName: "[name]__[local]__[hash:base64:8]"
+              } : {}
           },
           {
-            loader: 'postcss',
+            loader:'postcss',
             options: {
-              sourceMap: 'inline',
               config: {
-                path: path.resolve(__dirname, 'postcss.config.js'),
-              },
-            },
+                path: path.resolve(__dirname, 'postcss.config.js')
+              }
+            }
+          }
+        ]
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          "style",
+          {
+            loader: "css",
+            options:  config.css_modules
+              ? {
+                modules: true,
+                localIdentName: "[name]__[local]__[hash:base64:8]"
+              } : {}
           },
-          'resolve-url',
-          'sass',
-          'less',
-        ],
+          {
+            loader:'postcss',
+            options: {
+              config: {
+                path: path.resolve(__dirname, 'postcss.config.js')
+              }
+            }
+          },
+          "sass"
+        ]
       },
       {
         test: /\.(jpe?g|png|svg|gif|ico)$/,
@@ -67,9 +89,9 @@ const init = config => {
       },
       {
         test: /\.(eot|woff|otf|svg|ttf|woff2|appcache|mp3|mp4|pdf)(\?|$)/,
-        loader: 'file',
+        loader: 'url',
         options: {
-          name: config.assets + '/fonts/[name]-[hash:8].[ext]',
+          name:  '[name]-[hash:8].[ext]',
         },
       },
     ],

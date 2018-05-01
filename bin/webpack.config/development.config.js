@@ -20,19 +20,15 @@ module.exports = config => {
       STATIC: JSON.stringify(config.static[process.env.MODE]),
     }),
     new HtmlWebpackPlugin({
-      chunks: ['shared', 'vendor'],
-      filename: 'index.html',
-      title: config.template.title,
-      keywords: config.template.keywords,
-      description: config.template.description,
-      viewport: config.template.viewport,
-      version: config.template.version,
-      favicon: config.template.favicon,
+      filename: 'index.html', // 生成的html存放路径，相对于 path
       templateContent: data => {
         let tpl = fs.readFileSync(config.template.path, 'utf8')
         return tmpl(tpl, data)
       },
+      inject: true, // 允许插件修改哪些内容，包括head与body
+      hash: true // 为静态资源生成hash值
     }),
+
   ]
   baseConfig(config).plugins[1].config.loaders[0].query.env = {
     development: {

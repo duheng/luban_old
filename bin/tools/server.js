@@ -67,43 +67,7 @@ module.exports.start = function(userPort) {
   }
 
   app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
-  app.use(async (ctx, next) => {
-    const requested = ctx.get('x-requested-with')
-    //  console.log('ctx...')
-      //  console.log(ctx.request)
-  //  console.log(ctx.request.method)
-    if ( requested === 'XMLHttpRequest') {
-      console.log('parse____', ctx.request)
-      const { method, URL, body } = ctx.request
-      const { pathname, searchParams } = URL
-      const resp = await  getApi({ method, pathname, body })
-      // resp.on('body', (sbody) =>{
-      //   console.log(sbody) // 200
-      // //  console.log(response.headers['content-type']) // 'image/png'
-      // })
-      //   ctx.response.type = 'json';
-      //   ctx.response.body = resp.data
-//  console.log('resp.data____', resp)
-      fetch(`http://smart-starcircle.wepiao.com${pathname}?celebrity_id=28062`)
-      .then(
-          function(response){
-              if(response.status!==200){
-                  console.log("存在一个问题，状态码为："+response.status);
-                  return;
-              }
-              //检查响应文本
-              response.json().then(function(data){
-                  console.log(data);
-              });
-          }
-      )
-      .catch(function(err){
-          console.log("Fetch错误:"+err);
-      });
-    }
-    //  await next()
 
-  })
   const server = app.listen(userConfig.port, userConfig.host, err => {
     if (err) {
       console.error(err)

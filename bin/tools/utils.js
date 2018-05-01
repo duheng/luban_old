@@ -1,7 +1,6 @@
 const path = require('path')
 const fs = require('fs')
 const CWD = process.cwd()
-const request = require('request')
 const default_luban = require('./luban.json')
 
 const extend = (target, source) => {
@@ -59,15 +58,10 @@ const genAlias = jsDir => {
   return map
 }
 
-const getApi = api => {
-  const { method, pathname, body } = api
-//  console.log('-----', api.body)
-  return request.get(`http://smart-starcircle.wepiao.com${pathname}?celebrity_id=28062`)
-}
+
 module.exports = {
   getOptions,
   hasOptions,
   genFileName,
   genAlias,
-  getApi,
 }
