@@ -66,16 +66,23 @@ module.exports.start = function(userPort) {
     }
   }
 
-//   app.use(
-//     route.get('*', async (ctx, next) => {
-//       console.log('path---',ctx.path)
-//     //  ctx.body = await Mockjs.mock(item.data)
-//       next()
-//     }),
-//   )
-//
-// //  app.use(static(path.resolve(CWD, userConfig.build)));
- app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
+  app.use( //重定向到首页，
+    route.get('*',  async(ctx, next) => {
+      const index_name = 'index.html'
+      const filename = path.join(compile.outputPath, index_name);
+      const htmlFile = await (new Promise(function(resolve, reject){
+          compile.outputFileSystem.readFile(filename, (err, result) => {
+            if (err){
+              reject(err);
+            }else{
+              resolve(result);
+            }
+          });
+       }))
+       ctx.type = 'html';
+       ctx.body = htmlFile;
+    }),
+  )
 
   const server = app.listen(userConfig.port, userConfig.host, err => {
     if (err) {
