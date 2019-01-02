@@ -7,7 +7,7 @@ let middlewares = [thunk]
 let MODE = process.env.MODE
 
 if (MODE !== "release" && MODE !== "gray") {
-    let createLogger = require("redux-logger")
+    let { createLogger } = require("redux-logger")
     const logger = createLogger({
         level: "info",
         logger: console,

@@ -66,7 +66,16 @@ module.exports.start = function(userPort) {
     }
   }
 
-  app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
+//   app.use(
+//     route.get('*', async (ctx, next) => {
+//       console.log('path---',ctx.path)
+//     //  ctx.body = await Mockjs.mock(item.data)
+//       next()
+//     }),
+//   )
+//
+// //  app.use(static(path.resolve(CWD, userConfig.build)));
+ app.use(staticServe(path.join(CWD, userConfig.build), { extensions: ['html'] }))
 
   const server = app.listen(userConfig.port, userConfig.host, err => {
     if (err) {
