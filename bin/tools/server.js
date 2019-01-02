@@ -24,13 +24,7 @@ module.exports.start = function(userPort) {
   console.log('###################', process.env.MODE)
   const wdm = devMiddleware(compile, {
     noInfo: false,
-    watchOptions: {
-      aggregateTimeout: 300,
-      poll: true,
-    },
-    reload: true,
     publicPath: '/',
-    headers: { 'X-Custom-Header': 'yes' },
     stats: {
       colors: true,
       cached: false,
