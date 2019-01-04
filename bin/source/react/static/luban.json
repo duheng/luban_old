@@ -12,7 +12,7 @@
     "api": {
         "start": "",
         "test": "",
-        "release": "//api.luban.com/"
+        "release": "//api.luban.com"
     },
     "css_modules": false,
     "template": {

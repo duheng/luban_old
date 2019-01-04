@@ -13,7 +13,6 @@
         "prettier": "prettier --write --config .prettierrc \"src/**/*.{js,css,scss,less}\""
     },
     "dependencies": {
-        "lazy-load-component": "^1.1.5",
         "prop-types": "^15.6.1",
         "react": "^16.7.0",
         "react-dom": "^16.7.0",

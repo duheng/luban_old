@@ -1,19 +1,18 @@
 import * as types from '../constants/ActionTypes'
+import { handleActions, } from 'redux-actions';
 
 const initialState = {
-    movies: [],
-}
+  movies: {},
+};
 
-export default function root(state = initialState, action) {
-    switch (action.type) {
-        case types.RECEIVE_MOVIES:
-            {
-                return Object.assign({}, state, {
-                    movies: action.movies
-                })
-            }
+const handler = {};
 
-        default:
-            return state
-    }
-}
+handler[types.RECEIVE_MOVIES] = (state, action) => {
+  const { movies, } = action;
+  return {
+    ...state,
+    movies,
+  };
+};
+
+export default handleActions(handler, initialState);
