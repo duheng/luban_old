@@ -4,13 +4,13 @@
   "base": "src",
   "build": "dist",
   "static": {
-    "start": "",
-    "test": "",
+    "start": "/",
+    "test": "/",
     "release": "//static.luban.com/"
   },
   "api": {
-    "start": "",
-    "test": "",
+    "start": "/",
+    "test": "/",
     "release": "//api.luban.com/"
   },
   "vendor": ["react", "react-dom"],
