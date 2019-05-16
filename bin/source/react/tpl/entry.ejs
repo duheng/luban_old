@@ -1,18 +1,16 @@
 import ReactDom from "react-dom"
 import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom"
 <%if(redux){%>
-  import {Provider} from "react-redux"
+import {Provider} from "react-redux"
 <%}%>
-import browserHistory from "history/createBrowserHistory" // URL模式的history
+import { createBrowserHistory } from "history" // URL模式的history
 <%if(redux){%>
-  import configureStore from "app/store/configureStore"
+import configureStore from "app/store/configureStore"
 <%}%>
 <%if(redux){%>
-  const store = configureStore(browserHistory)
+const store = configureStore(createBrowserHistory)
 <%}%>
-
-  import asyncComponent from "utils/asyncComponent"
-
+import asyncComponent from "utils/asyncComponent"
 const Home = asyncComponent(() => import("./home"))
 const About = asyncComponent(() => import("./about"))
 
