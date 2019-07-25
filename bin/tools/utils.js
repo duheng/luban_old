@@ -50,6 +50,7 @@ const genFileName = jsDir => {
 }
 
 const genAlias = jsDir => {
+
   var names = fs.readdirSync(jsDir)
   var map = {}
   names.forEach(function(name) {

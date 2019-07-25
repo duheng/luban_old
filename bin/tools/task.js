@@ -35,7 +35,6 @@ module.exports = {
         path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
         ' --progress',
     )
-    server.start()
   },
   release: _ => {
     installNodeModules()

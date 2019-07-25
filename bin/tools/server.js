@@ -45,6 +45,7 @@ module.exports.start = function(userPort) {
             proxy(item.path, {
               target: item.proxy,
               changeOrigin: true,
+              rewrite: path => path.replace(item.path, ''),
               logs: true,
             }),
           )
