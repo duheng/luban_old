@@ -10,7 +10,10 @@ const CWD = process.cwd()
 require('shelljs/global')
 
 const installNodeModules = () => {
-  if (!fs.existsSync(path.resolve(CWD, 'node_modules'))) {
+  if (!fs.existsSync(path.resolve(CWD, 'package.json'))) {
+    console.log('\n🎒  您还没有创建项目，请先创建项目 \n')
+    process.exit()
+  } else if (!fs.existsSync(path.resolve(CWD, 'node_modules'))) {
     console.log('🎒  正在安装npm包，请稍后 ⌛️ ... \n')
     exec('npm install')
   }
