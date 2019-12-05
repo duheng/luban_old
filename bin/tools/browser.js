@@ -14,8 +14,8 @@ const openBrowser = (options) => {
     ].join('\n'),
     '\n\n 🌹  start service at http://' + options.host + ':' + options.port
   )
-
-  open('http://' + options.host + ':' + options.port, { app: 'google chrome' })
+  console.log('\n\nPlease copy the address and open it in the browser:',    ' http://' + options.host + ':' + options.port+'\n\n')
+  //open('http://' + options.host + ':' + options.port, { app: 'google chrome' })
 }
 
 module.exports = {

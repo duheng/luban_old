@@ -21,7 +21,7 @@ module.exports.start = function(userPort) {
   const config = devConfig(userConfig)
   const compile = webpack(config)
   is_start = process.env.MODE == 'start'
-  console.log('###################', process.env.MODE)
+ 
   const wdm = devMiddleware(compile, {
     noInfo: false,
     publicPath: '/',
