@@ -47,13 +47,26 @@ module.exports = {
     )
   },
   init: options => {
-    const { framework = 'react', redux = true, mock = true, appName = 'demo' } = options || {}
-    if (framework === 'react') {
-      source.initReact(options)
-    } else if (framework === 'vue') {
+
+    let __options = { 
+       framework : 'react', 
+       redux : true,
+       mock : true, 
+       appName : 'demo' 
+     };
+
+    if (typeof(options) == 'string') {
+      __options.appName = options
+    } else {
+      __options = {...__options, ...options}
+    }
+
+    if (__options.framework === 'react') {
+      source.initReact(__options)
+    } else if (__options.framework === 'vue') {
       console.log('vue项目还在建设中...')
       process.exit()
     }
-    console.log('项目', appName, '创建成功🌹')
+    console.log('项目', __options.appName, '创建成功🌹')
   },
 }

@@ -55,7 +55,7 @@ const init = config => {
             }
           },
           "sass"
-        ]
+        ],
       },
       {
         test: /\.(jpe?g|png|svg|gif|ico)$/,
