@@ -70,6 +70,6 @@ module.exports = {
       console.log('vue项目还在建设中...')
       process.exit()
     }
-    console.log('项目', __options.appName, '创建成功🌹')
+    console.log('\n项目', __options.appName, '创建成功🌹')
   },
 }

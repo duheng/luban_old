@@ -11,7 +11,7 @@ const isExists = name => {
 const show_help = () => {
   var options = [
     {
-      type: 'list',
+      type: 'rawlist',
       name: 'task',
       message: '选择要执行的任务: ',
       choices: [
@@ -36,7 +36,7 @@ const tasks = {
   init: () => {
     const questions = [
       {
-        type: 'list',
+        type: 'rawlist',
         name: 'framework',
         message: '请选择技术栈：',
         choices: [
