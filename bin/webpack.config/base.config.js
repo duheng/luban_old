@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const TransferWebpackPlugin = require('transfer-webpack-plugin')
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const HappyPack = require('happypack')
 const happyThreadPool = HappyPack.ThreadPool({ size: 6 })
 
@@ -27,7 +28,7 @@ const webpackConfig = config => {
         'node_modules',
         'bower_components',
       ],
-      alias: genAlias(path.resolve(CWD, config.base)),
+      alias: {...genAlias(path.resolve(CWD, config.base)), 'vue$': 'vue/dist/vue.esm.js'},
       extensions: ['.js', '.json', '.jsx', '.scss', '.css', '.less'],
     },
     resolveLoader: {
@@ -46,6 +47,7 @@ const webpackConfig = config => {
           },
         ],
       }),
+      new VueLoaderPlugin(),
       new CaseSensitivePathsPlugin(), //解决开发中大小写导致路径问题
       new webpack.ProvidePlugin({
         React: 'react',

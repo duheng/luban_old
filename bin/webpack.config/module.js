@@ -4,6 +4,13 @@ const init = config => {
   return {
     rules: [
       {
+        test: /\.vue$/,
+        use: 'vue-loader',
+          include: [
+           path.join(path.resolve(CWD, config.base))
+         ],
+      },
+      {
         test: /\.js/,
         use: 'happypack/loader?id=jsx',
         include: [
@@ -27,6 +34,7 @@ const init = config => {
           {
             loader:'postcss',
             options: {
+              sourceMap: true,
               config: {
                 path: path.resolve(__dirname, 'postcss.config.js')
               }
@@ -49,6 +57,7 @@ const init = config => {
           {
             loader:'postcss',
             options: {
+              sourceMap: true,
               config: {
                 path: path.resolve(__dirname, 'postcss.config.js')
               }

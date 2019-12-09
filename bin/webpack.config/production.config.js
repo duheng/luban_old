@@ -108,7 +108,8 @@ module.exports = _ => {
   		}
   	},
     performance: {
-      hints:"error",
-    },
+      hints: false,
+    }
+  
   })
 }
