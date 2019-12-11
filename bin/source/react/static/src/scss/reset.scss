@@ -9,10 +9,11 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pr
   background: transparent;
   vertical-align: baseline;
   font-style: inherit;
-  font-size: 100%; }
+ }
 
 html {
   font-family: sans-serif;
+  font-size: 62.5%;
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%; }
 
@@ -33,7 +34,6 @@ img {
 
 button, input, select, textarea {
   margin: 0;
-  font-size: 100%;
   font-family: inherit; }
 
 button, input {
@@ -66,7 +66,6 @@ dfn {
   font-style: italic; }
 
 code, kbd, pre, samp {
-  font-size: 1em;
   font-family: monospace, serif; }
 
 blockquote, q {

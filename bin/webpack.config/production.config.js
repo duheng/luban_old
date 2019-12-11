@@ -84,6 +84,12 @@ module.exports = _ => {
       usedExports:true,
       minimize:true,
   		splitChunks: {
+        chunks: 'async',
+        minSize: 30000,
+        minChunks: 1,
+        maxAsyncRequests: 5,
+        maxInitialRequests: 3,
+        name: false,
   			cacheGroups: {
   				commons: {
   					chunks: "initial",
