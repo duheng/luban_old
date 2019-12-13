@@ -80,6 +80,51 @@ const initReact = options => {
     .catch(err => console.error(err))
 }
 
+
+
+const initVue = options => {
+  const { framework, redux, mock, appName } = options
+  const source_base = path.join(__dirname, 'vue')
+  const dist_base = path.join(CWD, appName)
+  fse
+    .copy(path.resolve(source_base, 'static'), path.resolve(dist_base))
+    .then(() => {
+      // 生成redux模块
+     // redux && fse.copy(path.resolve(source_base, 'app'), path.resolve(dist_base, 'src', 'app'))
+    })
+/*    .then(() => {
+      // 生成入口
+      createJs({
+        src: path.resolve(source_base, 'tpl', 'entry'),
+        dist: path.resolve(dist_base, 'src', 'pages', 'index'),
+        param: { redux: redux },
+      })
+    })*/
+    .then(() => {
+      // 生成mock文件
+      const source_mock = path.resolve(source_base, 'tpl', 'mock.js')
+      mock &&
+        fse
+          .readFile(source_mock, 'utf8')
+          .then(tpl => {
+            fse.outputFile(path.resolve(dist_base, 'mock.js'), tpl)
+          })
+          .catch(err => {
+            console.error(err)
+          })
+    })
+    .then(() => {
+      // 生成package.json
+      createPkg(
+        path.join(__dirname, framework, 'tpl'),
+        path.resolve(CWD, appName, 'package.json'),
+        appName,
+      )
+    })
+    .catch(err => console.error(err))
+}
+
 module.exports = {
   initReact,
+  initVue
 }

@@ -15,8 +15,6 @@ const init = config => {
         use: 'happypack/loader?id=jsx',
         include: [
            path.join(path.resolve(CWD, config.base)),
-           // 注意包含 AMT 源文件目录
-           path.resolve(CWD, 'node_modules/amazeui-touch/js'),
          ]
       },
       {

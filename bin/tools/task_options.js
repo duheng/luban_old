@@ -34,7 +34,7 @@ const show_help = () => {
 
 const tasks = {
   init: () => {
-    const questions = [
+    let questions = [
       {
         type: 'rawlist',
         name: 'framework',
@@ -52,37 +52,49 @@ const tasks = {
         filter: val => {
           return val.toLowerCase()
         },
-      },
-      {
-        type: 'confirm',
-        name: 'redux',
-        message: '您需要用redux吗？',
-      },
-      {
-        type: 'confirm',
-        name: 'mock',
-        message: '您需要mock数据或者代理功能吗？',
-      },
-      {
-        type: 'input',
-        name: 'appName',
-        message: '请输入项目的名称: ',
-        validate: value => {
-          if (isExists(value)) {
-            console.error('\n\n该文件已存在')
-            return process.exit()
-          }
-          if (!value && !value.length) {
-            console.error('\n\n您还没有输入目名称')
-            return process.exit()
-          }
-
-          return true
-        },
-      },
+      }
     ]
+
+    const __askRedux =  {
+      type: 'confirm',
+      name: 'redux',
+      message: '您需要用redux吗？',
+    }
+
+    const __askMock = {
+      type: 'confirm',
+      name: 'mock',
+      message: '您需要mock数据或者代理功能吗？',
+    }
+
+    const __askAppName = {
+      type: 'input',
+      name: 'appName',
+      message: '请输入项目的名称: ',
+      validate: value => {
+        if (isExists(value)) {
+          console.error('\n\n该文件已存在')
+          return process.exit()
+        }
+        if (!value && !value.length) {
+          console.error('\n\n您还没有输入目名称')
+          return process.exit()
+        }
+        return true
+      }
+    }
+
     inquirer.prompt(questions, answers => {
-      task['init'](answers)
+      if(answers.framework === 'react') {
+        const __questions = [__askRedux,__askMock,__askAppName]
+        inquirer.prompt(__questions, answersB => {
+          task['init']({...answers,...answersB})
+        })
+      } else {
+        inquirer.prompt([__askMock,__askAppName], answersB => {
+          task['init']({...answers,...answersB})
+        })
+      }
     })
   },
 

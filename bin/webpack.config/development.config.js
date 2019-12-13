@@ -7,6 +7,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const baseConfig = require('./base.config')
 
+const { getOptions } = require('../tools/utils')
+const userConfig = getOptions()
+
+const PLATFORM = userConfig.platform
+
 module.exports = config => {
   const plugins = [
     // Enables Hot Modules Replacement
@@ -30,24 +35,28 @@ module.exports = config => {
     }),
 
   ]
-  baseConfig(config).plugins[1].config.loaders[0].query.env = {
-    development: {
-      plugins: [
-        [
-          require.resolve('babel-plugin-react-transform'),
-          {
-            transforms: [
-              {
-                transform: require.resolve('react-transform-hmr'),
-                imports: ['react'],
-                locals: ['module'],
-              },
-            ],
-          },
+
+  if(PLATFORM == 'react') {
+     baseConfig(config).plugins[1].config.loaders[0].query.env = {
+      development: {
+        plugins: [
+          [
+            require.resolve('babel-plugin-react-transform'),
+            {
+              transforms: [
+                {
+                  transform: require.resolve('react-transform-hmr'),
+                  imports: ['react', 'react-dom'],
+                  locals: ['module'],
+                },
+              ],
+            },
+          ],
         ],
-      ],
-    },
+      },
+    }
   }
+
 
   return merge(baseConfig(config), {
     mode: 'development',
@@ -57,8 +66,7 @@ module.exports = config => {
         require.resolve('webpack-hot-middleware/client'),
         path.resolve(CWD, config.base, config.pages),
       ],
-
-      vendor: ['react', 'react-dom'],
+      vendor:  PLATFORM == 'react' ? ['react', 'react-dom'] : ['vue','vuex'],
     },
     performance: {
       hints: false,

@@ -29,7 +29,7 @@ const webpackConfig = config => {
         'bower_components',
       ],
       alias: {...genAlias(path.resolve(CWD, config.base)), 'vue$': 'vue/dist/vue.esm.js'},
-      extensions: ['.js', '.json', '.jsx', '.scss', '.css', '.less'],
+      extensions: ['.js', '.vue', '.json', '.jsx', '.scss', '.css', '.less'],
     },
     resolveLoader: {
       modules: [path.resolve(__dirname, '..', '..', 'node_modules')],

@@ -67,8 +67,9 @@ module.exports = {
     if (__options.framework === 'react') {
       source.initReact(__options)
     } else if (__options.framework === 'vue') {
-      console.log('vue项目还在建设中...')
-      process.exit()
+       source.initVue(__options)
+     /* console.log('vue项目还在建设中...')
+      process.exit()*/
     }
     console.log('\n项目', __options.appName, '创建成功🌹')
   },

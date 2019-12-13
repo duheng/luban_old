@@ -71,7 +71,7 @@ module.exports = _ => {
     mode: 'production',
     entry: {
       shared: path.resolve(CWD, config.base, config.pages),
-      vendor: ['react', 'react-dom'],
+      vendor: config.platform == 'react' ? ['react', 'react-dom'] : ['vue','vuex'],
     },
     plugins,
     optimization: {
