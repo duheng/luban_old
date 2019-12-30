@@ -1,76 +1,70 @@
 #!/usr/bin/env node
 
-const program = require('commander')
-const path = require('path')
-const fs = require('fs')
-const source = require('../source')
-const server = require('./server')
-const CWD = process.cwd()
+const program = require('commander');
+const path = require('path');
+const fs = require('fs');
+const source = require('../source');
+const server = require('./server');
+const CWD = process.cwd();
 
-require('shelljs/global')
+require('shelljs/global');
 
 const installNodeModules = () => {
   if (!fs.existsSync(path.resolve(CWD, 'package.json'))) {
-    console.log('\n🎒  您还没有创建项目，请先创建项目 \n')
-    process.exit()
+    console.log('\n🎒  您还没有创建项目，请先创建项目 \n');
+    process.exit();
   } else if (!fs.existsSync(path.resolve(CWD, 'node_modules'))) {
-    console.log('🎒  正在安装npm包，请稍后 ⌛️ ... \n')
-    exec('npm install')
+    console.log('🎒  正在安装npm包，请稍后 ⌛️ ... \n');
+    exec('npm install');
   }
-}
+};
 
-const webpack = path.resolve(__dirname, '..', '..', 'node_modules', '.bin', 'webpack')
+const webpack = path.resolve(__dirname, '..', '..', 'node_modules', '.bin', 'webpack');
 
 module.exports = {
   start: port => {
-    installNodeModules()
-    process.env.MODE = 'start'
+    installNodeModules();
+    process.env.MODE = 'start';
     setTimeout(() => {
-      server.start(port)
-    }, 1)
+      server.start(port);
+    }, 1);
   },
   test: _ => {
-    installNodeModules()
-    process.env.MODE = 'test'
+    installNodeModules();
+    process.env.MODE = 'test';
     exec(
-      webpack +
-        ' --config ' +
-        path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
-        ' --progress',
-    )
+      webpack + ' --config ' + path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') + ' --progress'
+    );
   },
   release: _ => {
-    installNodeModules()
-    process.env.MODE = 'release'
+    installNodeModules();
+    process.env.MODE = 'release';
     exec(
-      webpack +
-        ' --config ' +
-        path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') +
-        ' --progress',
-    )
+      webpack + ' --config ' + path.resolve(__dirname, '..', 'webpack.config', 'production.config.js') + ' --progress'
+    );
   },
   init: options => {
+    let __options = {
+      framework: 'react',
+      redux: true,
+      mock: true,
+      appName: 'demo'
+    };
 
-    let __options = { 
-       framework : 'react', 
-       redux : true,
-       mock : true, 
-       appName : 'demo' 
-     };
-
-    if (typeof(options) == 'string') {
-      __options.appName = options
+    if (typeof options == 'string') {
+      __options.appName = options;
     } else {
-      __options = {...__options, ...options}
+      __options = { ...__options, ...options };
     }
 
     if (__options.framework === 'react') {
-      source.initReact(__options)
+      source.initReact(__options);
     } else if (__options.framework === 'vue') {
-       source.initVue(__options)
-     /* console.log('vue项目还在建设中...')
+      source.initVue(__options);
+      /* console.log('vue项目还在建设中...')
       process.exit()*/
     }
-    console.log('\n项目', __options.appName, '创建成功🌹')
-  },
-}
+    console.log('\n项目', __options.appName, '创建成功🌹');
+    // process.exit();
+  }
+};
