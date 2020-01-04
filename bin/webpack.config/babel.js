@@ -1,4 +1,46 @@
 const path = require('path')
+const { getOptions } = require('../tools/utils')
+const userConfig = getOptions()
+const UIPLUG = userConfig.ui_plug
+let __plugins = [
+  // { ...todo, completed: true }
+  require.resolve('babel-plugin-transform-object-rest-spread'),
+  // function x(a, b, c,) { }
+  require.resolve('babel-plugin-syntax-trailing-function-commas'),
+  // await fetch()
+  require.resolve('babel-plugin-syntax-async-functions'),
+  // function* () { yield 42; yield 43; }
+  [
+    require.resolve('babel-plugin-transform-regenerator'),
+    {
+      // async functions are conerted to generators by babel-preset-latest
+      async: false,
+    },
+  ],
+  // Polyfills the runtime needed for async/await and generators
+  [
+    require.resolve('babel-plugin-transform-runtime'),
+    {
+      helpers: false,
+      polyfill: false,
+      regenerator: true,
+      // resolve the babel runtime relative to the config
+      moduleName: path.dirname(require.resolve('babel-runtime/package')),
+    },
+  ],
+  // Optimization: hoist JSX that never changes out of render()
+  require.resolve('babel-plugin-transform-decorators-legacy'),
+  // require.resolve('babel-plugin-add-module-exports'),
+];
+
+!!UIPLUG && __plugins.push([
+  require.resolve('babel-plugin-import'),
+  {
+    "libraryName":  UIPLUG,
+    "libraryDirectory": "es",
+    "style": "css"
+  },
+]);
 
 module.exports = {
   // Don't try to find .babelrc because we want to force this configuration.
@@ -19,34 +61,5 @@ module.exports = {
     // stage-0
     require.resolve('babel-preset-stage-0'),
   ],
-  plugins: [
-    // { ...todo, completed: true }
-    require.resolve('babel-plugin-transform-object-rest-spread'),
-    // function x(a, b, c,) { }
-    require.resolve('babel-plugin-syntax-trailing-function-commas'),
-    // await fetch()
-    require.resolve('babel-plugin-syntax-async-functions'),
-    // function* () { yield 42; yield 43; }
-    [
-      require.resolve('babel-plugin-transform-regenerator'),
-      {
-        // async functions are conerted to generators by babel-preset-latest
-        async: false,
-      },
-    ],
-    // Polyfills the runtime needed for async/await and generators
-    [
-      require.resolve('babel-plugin-transform-runtime'),
-      {
-        helpers: false,
-        polyfill: false,
-        regenerator: true,
-        // resolve the babel runtime relative to the config
-        moduleName: path.dirname(require.resolve('babel-runtime/package')),
-      },
-    ],
-    // Optimization: hoist JSX that never changes out of render()
-    require.resolve('babel-plugin-transform-decorators-legacy'),
-    // require.resolve('babel-plugin-add-module-exports'),
-  ],
+  plugins: __plugins,
 }
