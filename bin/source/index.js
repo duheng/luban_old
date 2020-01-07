@@ -115,11 +115,7 @@ const initVue = options => {
     })
     .then(() => {
       // 生成package.json
-      createPkg(
-        path.join(__dirname, framework, 'tpl'),
-        path.resolve(CWD, appName, 'package.json'),
-        appName,
-      )
+    
     })
     .catch(err => console.error(err))
 }
